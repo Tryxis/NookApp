@@ -1,0 +1,33 @@
+@model JObject
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (Model != null)
+{
+    <div class="mt-4 row">
+        <div class="col-md-8">
+            <h3>Book Information</h3>
+            <p><strong>Title:</strong> @Model["title"]?.ToString()</p>
+            <p><strong>Authors:</strong> @string.Join(", ", (Model["author_name"] as JArray)?.Select(a => a?.ToString()) ?? new string[0])</p>
+            <p><strong>Publish Date:</strong> @string.Join(", ", (Model["publish_date"] as JArray)?.Select(d => d?.ToString()) ?? new string[0])</p>
+        </div>
+        <div class="col-md-4">
+            @if (Model["cover_i"] != null)
+            {
+                <img src="https://covers.openlibrary.org/b/id/@Model["cover_i"]-L.jpg" alt="Book Cover" class="img-fluid" />
+            }
+            else
+            {
+                <p>No cover image available.</p>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <p>No book details found.</p>
+}

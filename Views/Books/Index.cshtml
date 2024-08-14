@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Search for Books";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form method="post" asp-action="Search">
+    <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" class="form-control" id="title" name="title" />
+    </div>
+    <div class="form-group">
+        <label for="author">Author:</label>
+        <input type="text" class="form-control" id="author" name="author" />
+    </div>
+    <div class="form-group">
+        <label for="isbn">ISBN:</label>
+        <input type="text" class="form-control" id="isbn" name="isbn" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (ViewBag.BookTitle != null)
+{
+    <div class="mt-4 row">
+        <div class="col-md-8">
+            <h3>Book Information</h3>
+            <p><strong>Title:</strong> @ViewBag.BookTitle</p>
+            <p><strong>Authors:</strong> @ViewBag.Authors</p>
+            <p><strong>Publish Date:</strong> @ViewBag.PublishDate</p>
+        </div>
+        <div class="col-md-4">
+            @if (ViewBag.CoverImageUrl != null && ViewBag.CoverImageUrl != "No cover image available.")
+            {
+                <img src="@ViewBag.CoverImageUrl" alt="Book Cover" class="img-fluid" />
+            }
+            else
+            {
+                <p>@ViewBag.CoverImageUrl</p>
+            }
+        </div>
+    </div>
+}
+else if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-warning mt-4">
+        @ViewBag.ErrorMessage
+    </div>
+}
